@@ -28,7 +28,13 @@ AuthorSchema
 });
 
 // Virtual for author's lifespan
-AuthorSchema.virtual('lifespan').get(function() {});
+AuthorSchema.virtual('lifespan').get(function() {
+  if (this.date_of_birth && this.date_of_death) {
+    return (`${this.date_of_birth.getFullYear() - this.date_of_death.getFullYear()}`);
+  } else {
+    return (`${this.date_of_birth.getFullYear()} -`);
+  }
+});
 
 //Export model
 module.exports = mongoose.model('Author', AuthorSchema);
